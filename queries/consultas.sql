@@ -58,3 +58,23 @@ FROM pedidos ped
     Cuánto dinero ha ingresado la tienda en total (suma de la columna total en la tabla pedidos)? */
 SELECT SUM(ped.total)
 FROM pedidos ped
+
+/* *** PARTE III *** */
+
+/* Ejercicio 0: 
+    Puedes mostrar el nombre del cliente y la fecha de cada pedido que se ha hecho? (Une clientes y pedidos) */
+SELECT  c.nombre,
+	p.fecha
+FROM clientes c 
+JOIN pedidos p ON c.cliente_id = p.cliente_id 
+
+/* Ejercicio 1: 
+    Lista los 10 clientes que más han gastado en total (nombre, email, total gastado) */
+SELECT c.nombre,
+		c.email,
+		SUM(p.total) AS total
+FROM clientes c 
+JOIN pedidos p ON c.cliente_id = p.cliente_id 
+GROUP BY p.cliente_id 
+ORDER BY total DESC
+LIMIT 10
