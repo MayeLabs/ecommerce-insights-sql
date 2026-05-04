@@ -68,6 +68,7 @@ SELECT  c.nombre,
 FROM clientes c 
 JOIN pedidos p ON c.cliente_id = p.cliente_id 
 
+
 /* Ejercicio 1: 
     Lista los 10 clientes que más han gastado en total (nombre, email, total gastado) */
 SELECT c.nombre,
@@ -89,11 +90,23 @@ JOIN lineas_pedido lp on p.producto_id = lp.producto_id
 GROUP BY p.categoria 
 ORDER BY p.categoria
 
+
 /* Ejercicio 3:
 	Encuentra los clientes que se registraron en 2024 pero no han hecho ningun pedido*/
-SELECT c.*
+SELECT c.nombre, 
+	c.email, 
+	c.fecha_registro
 FROM clientes c 
 WHERE EXTRACT (YEAR FROM c.fecha_registro ) = 2024 AND  c.cliente_id  NOT IN (SELECT p.cliente_id FROM pedidos p)
+
+/* Forma 2 */
+SELECT c.nombre,
+	c.email,
+	c.fecha_registro
+FROM clientes c
+LEFT JOIN pedidos p ON c.cliente_id = p.cliente_id
+WHERE c.fecha_registro >= '2024-01-01' AND p.pedido_id IS NULL
+ORDER BY c.fecha_registro
 
 /* Ejercicio 4: 
 	Muestra el ranking de productos más vendidos, incluyendo el porcentaje sobre el total de ventas  */
@@ -118,4 +131,15 @@ SELECT producto_id,
 	ROUND(total_precio * 100 / SUM(total_precio) OVER (),2 ) AS porcentaje_ingresos
 from productos_totales
 order by ranking;
+
+/* Forma 2 */
+SELECT p.producto_id,
+	p.nombre,
+	p.categoria,
+	SUM(lp.cantidad) AS unidades_vendidas,
+	ROUND(SUM(lp.cantidad) * 100.0 / (SELECT SUM(cantidad) from lineas_pedido), 2) as porcentaje_unidades
+FROM lineas_pedido lp
+JOIN productos p ON lp.producto_id = p.producto_id
+GROUP BY p.producto_id, p.nombre, p.categoria
+ORDER BY unidades_vendidas DESC;
 
