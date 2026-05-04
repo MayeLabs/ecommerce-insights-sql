@@ -78,3 +78,44 @@ JOIN pedidos p ON c.cliente_id = p.cliente_id
 GROUP BY p.cliente_id 
 ORDER BY total DESC
 LIMIT 10
+
+/* Ejercicio 2: 
+  	Para cada categoría de producto, muestra el número de unidades vendidas y el ingreso total */
+SELECT p.categoria AS categoria,
+		SUM(lp.cantidad) AS unidades_vendidas,
+		SUM(lp.cantidad*lp.precio_unitario) AS ingreso_total
+FROM productos p 
+JOIN lineas_pedido lp on p.producto_id = lp.producto_id 
+GROUP BY p.categoria 
+ORDER BY p.categoria
+
+/* Ejercicio 3:
+	Encuentra los clientes que se registraron en 2024 pero no han hecho ningun pedido*/
+SELECT c.*
+FROM clientes c 
+WHERE EXTRACT (YEAR FROM c.fecha_registro ) = 2024 AND  c.cliente_id  NOT IN (SELECT p.cliente_id FROM pedidos p)
+
+/* Ejercicio 4: 
+	Muestra el ranking de productos más vendidos, incluyendo el porcentaje sobre el total de ventas  */
+WITH productos_totales (producto_id, nombre, categoria, und_total, total_precio)
+AS (
+	SELECT p.producto_id,
+			p.nombre,
+			p.categoria,
+			SUM(lp.cantidad) as und_total,
+			SUM(lp.cantidad * p.precio) total_precio
+	FROM productos p 
+	JOIN lineas_pedido lp on p.producto_id = lp.producto_id 
+	GROUP BY p.producto_id, p.nombre, p.categoria
+) 
+SELECT producto_id,
+	nombre,
+	categoria,
+	und_total, 
+	total_precio,
+	RANK() OVER (ORDER BY total_precio DESC) AS ranking,
+	ROUND(und_total*100 / SUM(und_total) OVER (), 2) AS porcentaje_unidades,
+	ROUND(total_precio * 100 / SUM(total_precio) OVER (),2 ) AS porcentaje_ingresos
+from productos_totales
+order by ranking;
+
