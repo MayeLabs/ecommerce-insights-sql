@@ -60,6 +60,33 @@ ecommerce-insights-sql/
 
 ## How to run it 
 
+```bash
+git clone https://github.com/MayeLabs/ecommerce-insights-sql.git
+cd ecommerce-insights-sql
+cp .env.example .env
+```
+Modify .env
+
+```bash
+docker compose up -d 
+```
+Connect with DBeaver
+   - Open DBeaver
+   - New Connection → PostgreSQL
+   - Host: `localhost`
+   - Port: `5432`
+   - Database, user and password from your `.env` file
+
+![conection](img/conection.jpg)
+
+
+Run the queries in `queries/consultas.sql`
+
+```bash
+docker compose down -v
+```
+
+
 ## What I Learned
 
 Working on the last queries taught me two important lessons:
@@ -81,8 +108,12 @@ También aprendí que reemplazar combinaciones de `JOIN + subconsulta` por un CT
 </details>
 
 ## Sample queries
-![exercise_3](/img/exercise_3.jpg)
-![excercise_4](/img/exercise_4.jpg)
+
+**exercise 3 - Part III**
+![exercise_3](img/exercise_3.jpg)
+
+**exercise 4 - Part III**
+![exercise_4](img/exercise_4.jpg)
 
 ## Acknowledgements
 
