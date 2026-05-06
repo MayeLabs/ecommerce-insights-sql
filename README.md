@@ -59,3 +59,22 @@ ecommerce-insights-sql/
 - **Container Orchestration:** Docker Compose 5.1.0
 
 
+## What I Learned
+
+Working on the last queries taught me two important lessons:
+
+When using subqueries with `NOT IN`, it is critical to check for `NULL` values in the subquery result — if any `NULL` exists, the entire condition silently returns no rows. A `LEFT JOIN` checking for `IS NULL` is safer and more explicit in these cases.
+
+I also learned that replacing `JOIN + subquery` combinations with a CTE makes queries more efficient and readable. With a subquery inside a `SELECT`, it executes once per row — which limits what you can calculate, like percentages over a total. With a CTE, the data is pre-calculated once and reused freely, reducing complexity and enabling window functions like `RANK()` and `SUM() OVER ()`.
+
+
+<details>
+<summary> Ver en Español</summary>
+
+El desarrollo de las últimas consultas me dejó dos aprendizajes importantes:
+
+Al usar subconsultas con `NOT IN`, es fundamental verificar la existencia de valores `NULL` en el resultado — si existe algún `NULL`, la condición no devuelve ninguna fila sin dar ningún error. Un `LEFT JOIN` verificando `IS NULL` es más seguro y explícito en estos casos.
+
+También aprendí que reemplazar combinaciones de `JOIN + subconsulta` por un CTE hace las consultas más eficientes y legibles. Con una subconsulta dentro del `SELECT`, esta se ejecuta una vez por cada fila — lo que limita los cálculos posibles, como porcentajes sobre un total. Con un CTE, los datos se pre-calculan una sola vez y se reutilizan libremente, reduciendo la complejidad y permitiendo el uso de window functions como `RANK()` y `SUM() OVER ()`.
+
+</details>
