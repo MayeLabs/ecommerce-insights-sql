@@ -32,6 +32,8 @@ answering business questions such as:
 
 Built with PostgreSQL as the database engine and Docker to spin up a fully reproducible environment.
 
+## Database Schema
+![Schema](img/diagram.jpg)
 
 ## Project Structure
 
@@ -56,6 +58,7 @@ ecommerce-insights-sql/
 - **Containerization:** Docker 29.3.0
 - **Container Orchestration:** Docker Compose 5.1.0
 
+## How to run it 
 
 ## What I Learned
 
@@ -76,3 +79,17 @@ Al usar subconsultas con `NOT IN`, es fundamental verificar la existencia de val
 También aprendí que reemplazar combinaciones de `JOIN + subconsulta` por un CTE hace las consultas más eficientes y legibles. Con una subconsulta dentro del `SELECT`, esta se ejecuta una vez por cada fila — lo que limita los cálculos posibles, como porcentajes sobre un total. Con un CTE, los datos se pre-calculan una sola vez y se reutilizan libremente, reduciendo la complejidad y permitiendo el uso de window functions como `RANK()` y `SUM() OVER ()`.
 
 </details>
+
+## Sample queries
+![exercise_3](/img/exercise_3.jpg)
+![excercise_4](/img/exercise_4.jpg)
+
+## Acknowledgements
+
+This project is based on an exercise from the **Data Engineering Bootcamp** by [ANBAN](https://academia.asociacionbigdata.es/) x [DataOrigin](https://www.dataorigin.es/).
+
+## Author
+
+**Maye**
+- GitHub: [@MayeLabs](https://github.com/MayeLabs)
+- LinkedIn: [@maye96](https://www.linkedin.com/in/maye96/)
