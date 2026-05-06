@@ -7,8 +7,6 @@ SQL analytics project using PostgreSQL and Docker. Covers querying, aggregations
 
 ## Motivation
 
-## Motivation
-
 This project was developed to practice SQL over a simulated e-commerce database, 
 answering business questions such as:
 
